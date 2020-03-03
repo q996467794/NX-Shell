@@ -21,13 +21,13 @@ static void Menu_DisplaySortSettings(void) {
 	Touch_Init(&touchInfo);
 
 	u32 title_height = 0;
-	SDL_GetTextDimensions(30, "Sorting Options", NULL, &title_height);
+	SDL_GetTextDimensions(30, "排序选项", NULL, &title_height);
 
 	const char *main_menu_items[] = {
-		"By name (ascending)",
-		"By name (descending)",
-		"By size (largest first)",
-		"By size (smallest first)"
+		"按名称（升序）",
+		"按名称（降序）",
+		"按大小（降序）",
+		"按大小（升序）"
 	};
 
 	int radio_button_width = 0, radio_button_height = 0; // 1180
@@ -41,7 +41,7 @@ static void Menu_DisplaySortSettings(void) {
 		StatusBar_DisplayTime();
 
 		SDL_DrawImage(icon_back, 40, 66);
-		SDL_DrawText(128, 40 + ((100 - title_height)/2), 30, WHITE, "Sorting Options");
+		SDL_DrawText(128, 40 + ((100 - title_height)/2), 30, WHITE, "排序选项");
 
 		int printed = 0; // Print counter
 
@@ -134,23 +134,23 @@ static void Menu_ControlAboutDialog(u64 input, TouchInfo touchInfo) {
 static void Menu_DisplayAboutDialog(void) {
 	u32 text1_width = 0, text2_width = 0, text3_width = 0, text4_width = 0;
 	SDL_GetTextDimensions(20, "NX Shell vX.X.X", &text1_width, NULL);
-	SDL_GetTextDimensions(20, "Author: Joel16", &text2_width, NULL);
-	SDL_GetTextDimensions(20, "Graphics: Preetisketch and CyanogenMod/LineageOS contributors", &text3_width, NULL);
-	SDL_GetTextDimensions(20, "Touch screen: NicholeMattera", &text4_width, NULL);
-	SDL_GetTextDimensions(25, "OK", &confirm_width, &confirm_height);
+	SDL_GetTextDimensions(20, "作者: Joel16", &text2_width, NULL);
+	SDL_GetTextDimensions(20, "主题: Preetisketch 和 CyanogenMod/LineageOS 的贡献者", &text3_width, NULL);
+	SDL_GetTextDimensions(20, "触摸: NicholeMattera", &text4_width, NULL);
+	SDL_GetTextDimensions(25, "确定", &confirm_width, &confirm_height);
 
 	SDL_QueryTexture(dialog, NULL, NULL, &dialog_width, &dialog_height);
 
 	SDL_DrawRect(0, 40, 1280, 680, FC_MakeColor(0, 0, 0, config.dark_theme? 55 : 80));
 	SDL_DrawImage(config.dark_theme? dialog_dark : dialog, ((1280 - (dialog_width)) / 2), ((720 - (dialog_height)) / 2));
-	SDL_DrawText(((1280 - (dialog_width)) / 2) + 30, ((720 - (dialog_height)) / 2) + 30, 25, config.dark_theme? TITLE_COLOUR_DARK : TITLE_COLOUR, "About");
+	SDL_DrawText(((1280 - (dialog_width)) / 2) + 30, ((720 - (dialog_height)) / 2) + 30, 25, config.dark_theme? TITLE_COLOUR_DARK : TITLE_COLOUR, "关于");
 	SDL_DrawTextf(((1280 - (text1_width)) / 2), ((720 - (dialog_height)) / 2) + 70, 20, config.dark_theme? TEXT_MIN_COLOUR_DARK : TEXT_MIN_COLOUR_LIGHT, "NX Shell v%d.%d.%d", VERSION_MAJOR, VERSION_MINOR, VERSION_MICRO);
-	SDL_DrawText(((1280 - (text2_width)) / 2), ((720 - (dialog_height)) / 2) + 100, 20, config.dark_theme? TEXT_MIN_COLOUR_DARK : TEXT_MIN_COLOUR_LIGHT, "Author: Joel16");
-	SDL_DrawText(((1280 - (text3_width)) / 2), ((720 - (dialog_height)) / 2) + 130, 20, config.dark_theme? TEXT_MIN_COLOUR_DARK : TEXT_MIN_COLOUR_LIGHT, "Graphics: Preetisketch and CyanogenMod/LineageOS contributors");
-	SDL_DrawText(((1280 - (text4_width)) / 2), ((720 - (dialog_height)) / 2) + 160, 20, config.dark_theme? TEXT_MIN_COLOUR_DARK : TEXT_MIN_COLOUR_LIGHT, "Touch screen: NicholeMattera");
+	SDL_DrawText(((1280 - (text2_width)) / 2), ((720 - (dialog_height)) / 2) + 100, 20, config.dark_theme? TEXT_MIN_COLOUR_DARK : TEXT_MIN_COLOUR_LIGHT, "作者: Joel16");
+	SDL_DrawText(((1280 - (text3_width)) / 2), ((720 - (dialog_height)) / 2) + 130, 20, config.dark_theme? TEXT_MIN_COLOUR_DARK : TEXT_MIN_COLOUR_LIGHT, "主题: Preetisketch 和 CyanogenMod/LineageOS 的贡献者");
+	SDL_DrawText(((1280 - (text4_width)) / 2), ((720 - (dialog_height)) / 2) + 160, 20, config.dark_theme? TEXT_MIN_COLOUR_DARK : TEXT_MIN_COLOUR_LIGHT, "触摸: NicholeMattera");
 
 	SDL_DrawRect((1030 - (confirm_width)) - 20, (((720 - (dialog_height)) / 2) + 245) - 20, confirm_width + 40, confirm_height + 40, config.dark_theme? SELECTOR_COLOUR_DARK : SELECTOR_COLOUR_LIGHT);
-	SDL_DrawText(1030 - (confirm_width), ((720 - (dialog_height)) / 2) + 245, 25, config.dark_theme? TITLE_COLOUR_DARK : TITLE_COLOUR, "OK");
+	SDL_DrawText(1030 - (confirm_width), ((720 - (dialog_height)) / 2) + 245, 25, config.dark_theme? TITLE_COLOUR_DARK : TITLE_COLOUR, "确定");
 }
 
 void Menu_DisplaySettings(void) {
@@ -160,13 +160,13 @@ void Menu_DisplaySettings(void) {
 	Touch_Init(&touchInfo);
 
 	u32 title_height = 0;
-	SDL_GetTextDimensions(30, "Settings", NULL, &title_height);
+	SDL_GetTextDimensions(30, "设置", NULL, &title_height);
 
 	const char *main_menu_items[] = {
-		"Sorting options",
-		"Dark theme",
-		"Developer options",
-		"About"
+		"排序选项",
+		"暗色主题",
+		"开发选项",
+		"关于"
 	};
 
 	int toggle_button_width = 0, toggle_button_height = 0; //1180
@@ -182,7 +182,7 @@ void Menu_DisplaySettings(void) {
 		StatusBar_DisplayTime();
 
 		SDL_DrawImage(icon_back, 40, 66);
-		SDL_DrawText(128, 40 + ((100 - title_height)/2), 30, WHITE, "Settings");
+		SDL_DrawText(128, 40 + ((100 - title_height)/2), 30, WHITE, "设置");
 
 		int printed = 0; // Print counter
 

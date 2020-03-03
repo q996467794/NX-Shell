@@ -15,7 +15,7 @@
 static void *addr;
 
 static void Term_Services(void) {
-	if (("DEV_USER"))
+	if (fsdevGetDeviceFileSystem("DEV_USER"))
 		fsdevUnmountDevice("DEV_USER");
 
 	if (fsdevGetDeviceFileSystem("DEV_SYSTEM"))

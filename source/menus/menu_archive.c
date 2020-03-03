@@ -101,7 +101,7 @@ int Archive_ExtractArchive(const char *path) {
 	}
 	
 	for (;;) {
-		Dialog_DisplayProgress("Extracting", path, count, max);
+		Dialog_DisplayProgress("解压中", path, count, max);
 		
 		struct archive_entry *entry = NULL;
 		ret = archive_read_next_header(handle, &entry);
@@ -154,12 +154,12 @@ int Archive_ExtractFile(const char *path) {
 
 	int dialog_width = 0, dialog_height = 0;
 	u32 confirm_width = 0, confirm_height = 0, cancel_width = 0, cancel_height = 0;
-	SDL_GetTextDimensions(25, "YES", &confirm_width, &confirm_height);
-	SDL_GetTextDimensions(25, "NO", &cancel_width, &cancel_height);
+	SDL_GetTextDimensions(25, "确定", &confirm_width, &confirm_height);
+	SDL_GetTextDimensions(25, "取消", &cancel_width, &cancel_height);
 	SDL_QueryTexture(dialog, NULL, NULL, &dialog_width, &dialog_height);
 
 	while(appletMainLoop()) {
-		Dialog_DisplayPrompt("Extract file", "This may take a few minutes.", "Do you want to continue?", &dialog_selection, true);
+		Dialog_DisplayPrompt("解压文件", "这可能需要几分钟", "你确定要继续吗？", &dialog_selection, true);
 
 		hidScanInput();
 		Touch_Process(&touchInfo);

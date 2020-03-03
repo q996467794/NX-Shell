@@ -215,7 +215,7 @@ void Dirbrowse_DisplayFiles(void) {
 			SDL_GetTextDimensions(25, file->name, NULL, &height);
 			
 			if (strncmp(file->name, "..", 2) == 0)
-				SDL_DrawText(170, 140 + ((73 - height) / 2) + (73 * printed), 25, config.dark_theme? WHITE : BLACK, "Parent folder");
+				SDL_DrawText(170, 140 + ((73 - height) / 2) + (73 * printed), 25, config.dark_theme? WHITE : BLACK, "上级目录");
 			else 
 				SDL_DrawText(170, 140 + ((73 - height) / 2) + (73 * printed), 25, config.dark_theme? WHITE : BLACK, file->name);
 

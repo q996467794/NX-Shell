@@ -25,11 +25,11 @@ void Menu_FTP(void) {
 
 	u32 ip_width = 0, instruc_width = 0, transfer_width = 0;
 	SDL_GetTextDimensions(25, hostname_disp, &ip_width, NULL);
-	SDL_GetTextDimensions(25, "Press B key to exit FTP mode.", &instruc_width, NULL);
+	SDL_GetTextDimensions(25, "按B键退出FTP模式", &instruc_width, NULL);
 	
 	int dialog_width = 0, dialog_height = 0;
 	u32 confirm_width = 0, confirm_height = 0;
-	SDL_GetTextDimensions(25, "OK", &confirm_width, &confirm_height);
+	SDL_GetTextDimensions(25, "确定", &confirm_width, &confirm_height);
 	SDL_QueryTexture(dialog, NULL, NULL, &dialog_width, &dialog_height);
 	
 	TouchInfo touchInfo;
@@ -47,7 +47,7 @@ void Menu_FTP(void) {
 		StatusBar_DisplayTime();
 		Dirbrowse_DisplayFiles();
 
-		Dialog_DisplayMessage("FTP", R_SUCCEEDED(ret)? hostname_disp : NULL, "Press B key or tap \"OK\" to exit FTP mode.", false);
+		Dialog_DisplayMessage("FTP", R_SUCCEEDED(ret)? hostname_disp : NULL, "按B键或点击\"确定\"退出FTP模式", false);
 		
 		if (strlen(ftp_file_transfer) != 0) {
 			SDL_GetTextDimensions(25, ftp_file_transfer, &transfer_width, NULL);

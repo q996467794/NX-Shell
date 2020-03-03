@@ -17,11 +17,11 @@ void Menu_DisplayError(const char *msg, int ret) {
     
     int dialog_width = 0, dialog_height = 0;
     u32 confirm_width = 0, confirm_height = 0;
-    SDL_GetTextDimensions(25, "OK", &confirm_width, &confirm_height);
+    SDL_GetTextDimensions(25, "确定", &confirm_width, &confirm_height);
     SDL_QueryTexture(dialog, NULL, NULL, &dialog_width, &dialog_height);
     
     while(appletMainLoop()) {
-        Dialog_DisplayMessage("Error", msg, result, true);
+        Dialog_DisplayMessage("错误", msg, result, true);
         
         hidScanInput();
         Touch_Process(&touchInfo);

@@ -45,11 +45,11 @@ void Dialog_DisplayMessage(const char *title, const char *msg_1, const char *msg
     
     Dialog_DisplayBoxAndMsg(title, msg_1, msg_2, text_width1, text_width2, with_bg);
 
-    SDL_GetTextDimensions(25, "OK", &confirm_width, &confirm_height);
+    SDL_GetTextDimensions(25, "确定", &confirm_width, &confirm_height);
 
     SDL_DrawRect((1030 - (confirm_width)) - 20, (((720 - (height)) / 2) + 245) - 20, confirm_width + 40, confirm_height + 40, 
         config.dark_theme? SELECTOR_COLOUR_DARK : SELECTOR_COLOUR_LIGHT);
-    SDL_DrawText(1030 - (confirm_width), ((720 - (height)) / 2) + 245, 25, config.dark_theme? TITLE_COLOUR_DARK : TITLE_COLOUR, "OK");
+    SDL_DrawText(1030 - (confirm_width), ((720 - (height)) / 2) + 245, 25, config.dark_theme? TITLE_COLOUR_DARK : TITLE_COLOUR, "确定");
 
     if (with_bg)
         SDL_RenderPresent(SDL_GetRenderer(SDL_GetWindow()));
@@ -66,8 +66,8 @@ void Dialog_DisplayPrompt(const char *title, const char *msg_1, const char *msg_
         
     Dialog_DisplayBoxAndMsg(title, msg_1, msg_2, text_width1, text_width2, with_bg);
     
-    SDL_GetTextDimensions(25, "YES", &confirm_width, &confirm_height);
-    SDL_GetTextDimensions(25, "NO", &cancel_width, &cancel_height);
+    SDL_GetTextDimensions(25, "确定", &confirm_width, &confirm_height);
+    SDL_GetTextDimensions(25, "取消", &cancel_width, &cancel_height);
     
     if (*selection == 0)
         SDL_DrawRect((1030 - (confirm_width)) - 20, (((720 - (height)) / 2) + 245) - 20, confirm_width + 40, confirm_height + 40, 
@@ -76,8 +76,8 @@ void Dialog_DisplayPrompt(const char *title, const char *msg_1, const char *msg_
         SDL_DrawRect((915 - (confirm_width)) - 20, (((720 - (height)) / 2) + 245) - 20, confirm_width + 40, cancel_height + 40, 
             config.dark_theme? SELECTOR_COLOUR_DARK : SELECTOR_COLOUR_LIGHT);
 
-    SDL_DrawText(1030 - (confirm_width), ((720 - (height)) / 2) + 245, 25, config.dark_theme? TITLE_COLOUR_DARK : TITLE_COLOUR, "YES");
-    SDL_DrawText(910 - (cancel_width), ((720 - (height)) / 2) + 245, 25, config.dark_theme? TITLE_COLOUR_DARK : TITLE_COLOUR, "NO");
+    SDL_DrawText(1030 - (confirm_width), ((720 - (height)) / 2) + 245, 25, config.dark_theme? TITLE_COLOUR_DARK : TITLE_COLOUR, "确定");
+    SDL_DrawText(910 - (cancel_width), ((720 - (height)) / 2) + 245, 25, config.dark_theme? TITLE_COLOUR_DARK : TITLE_COLOUR, "取消");
     
     if (with_bg)
         SDL_RenderPresent(SDL_GetRenderer(SDL_GetWindow()));

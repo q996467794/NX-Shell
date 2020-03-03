@@ -135,11 +135,11 @@ static void Menu_ControlMenuBar(u64 input, TouchInfo touchInfo) {
 
 static void Menu_DisplayMenuBar(void) {
 	const char *menubar_items[] = {
-		"External storage",
-		"CalibrationFile",
-		"SafeMode",
-		"User",
-		"System"
+		"外部存储",
+		"校验文件",
+		"安全模式",
+		"用户文件",
+		"系统文件"
 	};
 
 	const char *menubar_desc[] = {
@@ -176,7 +176,7 @@ static void Menu_DisplayMenuBar(void) {
 			SDL_DrawText(menubar_x + 100, 229 + (80 * printed), 25, config.dark_theme? WHITE : BLACK, menubar_items[i]);
 			SDL_DrawText(menubar_x + 100, 259 + (80 * printed), 20, config.dark_theme? TEXT_MIN_COLOUR_DARK : TEXT_MIN_COLOUR_LIGHT, menubar_desc[i]);
 
-			if (!strcmp(menubar_items[i], "External storage"))
+			if (!strcmp(menubar_items[i], "外部存储"))
 				SDL_DrawImage(config.dark_theme? icon_sd_dark : icon_sd, menubar_x + 20, 224 + (80 * printed));
 			else
 				SDL_DrawImage(config.dark_theme? icon_secure_dark : icon_secure, menubar_x + 20, 224 + (80 * printed));

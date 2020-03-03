@@ -43,7 +43,7 @@ void FileOptions_ResetClipboard(void) {
 static Result FileOptions_CreateFolder(void) {
 	Result ret = 0;
 	char *buf = malloc(256);
-	strcpy(buf, Keyboard_GetText("Enter folder name", "New folder"));
+	strcpy(buf, Keyboard_GetText("输入文件夹名称", "新建文件夹"));
 
 	if (!strncmp(buf, "", 1))
 		return -1;
@@ -67,7 +67,7 @@ static Result FileOptions_CreateFolder(void) {
 static Result FileOptions_CreateFile(void) {
 	Result ret = 0;
 	char *buf = malloc(256);
-	strcpy(buf, Keyboard_GetText("Enter file name", "New File.txt"));
+	strcpy(buf, Keyboard_GetText("输入文件名称", "新建TXT文件"));
 
 	if (!strncmp(buf, "", 1))
 		return -1;
@@ -105,7 +105,7 @@ static Result FileOptions_Rename(void) {
 	strcpy(newPath, cwd);
 	strcat(oldPath, file->name);
 
-	strcpy(buf, Keyboard_GetText("Enter name", file->name));
+	strcpy(buf, Keyboard_GetText("输入名称", file->name));
 	strcat(newPath, buf);
 	free(buf);
 
@@ -174,7 +174,7 @@ static void HandleDelete(void) {
 
 	if ((multi_select_index > 0) && (strlen(multi_select_dir) != 0)) {
 		for (int i = 0; i < multi_select_index; i++) {
-			Dialog_DisplayProgress("Delete", "Deleting multiple files...", i, multi_select_index);
+			Dialog_DisplayProgress("删除", "删除多个文件...", i, multi_select_index);
 
 			if (strlen(multi_select_paths[i]) != 0) {
 				if (strncmp(multi_select_paths[i], "..", 2) != 0) {
@@ -194,7 +194,7 @@ static void HandleDelete(void) {
 	}
 	else {
 		File *file = Dirbrowse_GetFileIndex(position);
-		Dialog_DisplayMessage("Delete", "Deleting...", file->name, true);
+		Dialog_DisplayMessage("删除", "删除中...", file->name, true);
 
 		if (R_FAILED(FileOptions_Delete(file))) {
 			appletSetMediaPlaybackState(false);
@@ -254,10 +254,10 @@ void Menu_ControlDeleteDialog(u64 input, TouchInfo touchInfo) {
 }
 
 void Menu_DisplayDeleteDialog(void) {
-	SDL_GetTextDimensions(25, "YES", &delete_confirm_width, &delete_confirm_height);
-	SDL_GetTextDimensions(25, "NO", &delete_cancel_width, &delete_cancel_height);
+	SDL_GetTextDimensions(25, "确定", &delete_confirm_width, &delete_confirm_height);
+	SDL_GetTextDimensions(25, "取消", &delete_cancel_width, &delete_cancel_height);
 	SDL_QueryTexture(dialog, NULL, NULL, &delete_width, &delete_height);
-	Dialog_DisplayPrompt("Confirm deletion", "Do you wish to continue?", NULL, &delete_dialog_selection, false);
+	Dialog_DisplayPrompt("确认删除", "你确定要继续吗？", NULL, &delete_dialog_selection, false);
 }
 
 void Menu_ControlProperties(u64 input, TouchInfo touchInfo) {
@@ -283,25 +283,25 @@ void Menu_DisplayProperties(void) {
 
 	SDL_DrawRect(0, 40, 1280, 680, FC_MakeColor(0, 0, 0, config.dark_theme? 55 : 80));
 	SDL_DrawImage(config.dark_theme? properties_dialog_dark : properties_dialog, 350, 85);
-	SDL_DrawText(380, 115, 25, config.dark_theme? TITLE_COLOUR_DARK : TITLE_COLOUR, "Properties");
+	SDL_DrawText(380, 115, 25, config.dark_theme? TITLE_COLOUR_DARK : TITLE_COLOUR, "属性");
 
 	char utils_size[16];
 	u64 size = 0;
 	FS_Getfile_size(fs, path, &size);
 	Utils_GetSizeString(utils_size, size);
 
-	SDL_DrawTextf(390, 183, 25, config.dark_theme? TEXT_MIN_COLOUR_DARK : TEXT_MIN_COLOUR_LIGHT, "Name: %s", file->name);
+	SDL_DrawTextf(390, 183, 25, config.dark_theme? TEXT_MIN_COLOUR_DARK : TEXT_MIN_COLOUR_LIGHT, "名称: %s", file->name);
 
 	if (!file->isDir) {
-		SDL_DrawTextf(390, 233, 25, config.dark_theme? TEXT_MIN_COLOUR_DARK : TEXT_MIN_COLOUR_LIGHT, "Size: %s", utils_size);
-		SDL_DrawTextf(390, 283, 25, config.dark_theme? TEXT_MIN_COLOUR_DARK : TEXT_MIN_COLOUR_LIGHT, "Permission: %s", FS_GetFilePermission(path));
+		SDL_DrawTextf(390, 233, 25, config.dark_theme? TEXT_MIN_COLOUR_DARK : TEXT_MIN_COLOUR_LIGHT, "大小: %s", utils_size);
+		SDL_DrawTextf(390, 283, 25, config.dark_theme? TEXT_MIN_COLOUR_DARK : TEXT_MIN_COLOUR_LIGHT, "权限: %s", FS_GetFilePermission(path));
 	}
 	else 
-		SDL_DrawTextf(390, 233, 25, config.dark_theme? TEXT_MIN_COLOUR_DARK : TEXT_MIN_COLOUR_LIGHT, "Permission: %s", FS_GetFilePermission(path));
+		SDL_DrawTextf(390, 233, 25, config.dark_theme? TEXT_MIN_COLOUR_DARK : TEXT_MIN_COLOUR_LIGHT, "权限: %s", FS_GetFilePermission(path));
 
-	SDL_GetTextDimensions(25, "OK", &properties_ok_width, &properties_ok_height);
+	SDL_GetTextDimensions(25, "确定", &properties_ok_width, &properties_ok_height);
 	SDL_DrawRect((890 - properties_ok_width) - 20, (595 - properties_ok_height) - 20, properties_ok_width + 40, properties_ok_height + 40, config.dark_theme? SELECTOR_COLOUR_DARK : SELECTOR_COLOUR_LIGHT);
-	SDL_DrawText(890 - properties_ok_width, 595 - properties_ok_height, 25, config.dark_theme? TITLE_COLOUR_DARK : TITLE_COLOUR, "OK");
+	SDL_DrawText(890 - properties_ok_width, 595 - properties_ok_height, 25, config.dark_theme? TITLE_COLOUR_DARK : TITLE_COLOUR, "确定");
 }
 
 // Copy file from src to dst
@@ -361,7 +361,7 @@ static int FileOptions_CopyFile(char *src, char *dst, bool display_animation) {
 		offset += bytes_read;
 
 		if (display_animation)
-			Dialog_DisplayProgress(copymode == 1? "Moving" : "Copying", Utils_Basename(temp_path_src), offset, size);
+			Dialog_DisplayProgress(copymode == 1? "移动中" : "复制中", Utils_Basename(temp_path_src), offset, size);
 	} while(offset < size);
 
 	free(buf);
@@ -869,9 +869,9 @@ void Menu_ControlOptions(u64 input, TouchInfo touchInfo) {
 void Menu_DisplayOptions(void) {
 	SDL_DrawRect(0, 40, 1280, 680, FC_MakeColor(0, 0, 0, config.dark_theme? 55 : 80));
 	SDL_DrawImage(config.dark_theme? options_dialog_dark : options_dialog, 350, 85);
-	SDL_DrawText(380, 115, 25, config.dark_theme? TITLE_COLOUR_DARK : TITLE_COLOUR, "Actions");
+	SDL_DrawText(380, 115, 25, config.dark_theme? TITLE_COLOUR_DARK : TITLE_COLOUR, "操作");
 
-	SDL_GetTextDimensions(25, "CANCEL", &options_cancel_width, &options_cancel_height);
+	SDL_GetTextDimensions(25, "取消", &options_cancel_width, &options_cancel_height);
 	
 	if (row == 0 && column == 0)
 		SDL_DrawRect(354, 188, 287, 101, config.dark_theme? SELECTOR_COLOUR_DARK : SELECTOR_COLOUR_LIGHT);
@@ -894,22 +894,22 @@ void Menu_DisplayOptions(void) {
 
 
 	if (!options_more) {
-		SDL_DrawText(385, 225, 25, config.dark_theme? TEXT_MIN_COLOUR_DARK : TEXT_MIN_COLOUR_LIGHT, "Properties");
-		SDL_DrawText(385, 327, 25, config.dark_theme? TEXT_MIN_COLOUR_DARK : TEXT_MIN_COLOUR_LIGHT, copy_status? "Paste" : "Copy");
-		SDL_DrawText(385, 429, 25, config.dark_theme? TEXT_MIN_COLOUR_DARK : TEXT_MIN_COLOUR_LIGHT, "Delete");
+		SDL_DrawText(385, 225, 25, config.dark_theme? TEXT_MIN_COLOUR_DARK : TEXT_MIN_COLOUR_LIGHT, "属性");
+		SDL_DrawText(385, 327, 25, config.dark_theme? TEXT_MIN_COLOUR_DARK : TEXT_MIN_COLOUR_LIGHT, copy_status? "粘贴" : "复制");
+		SDL_DrawText(385, 429, 25, config.dark_theme? TEXT_MIN_COLOUR_DARK : TEXT_MIN_COLOUR_LIGHT, "删除");
 		
-		SDL_DrawText(672, 225, 25, config.dark_theme? TEXT_MIN_COLOUR_DARK : TEXT_MIN_COLOUR_LIGHT, "Refresh");
-		SDL_DrawText(672, 327, 25, config.dark_theme? TEXT_MIN_COLOUR_DARK : TEXT_MIN_COLOUR_LIGHT, cut_status? "Paste" : "Move");
-		SDL_DrawText(672, 429, 25, config.dark_theme? TEXT_MIN_COLOUR_DARK : TEXT_MIN_COLOUR_LIGHT, "More...");
+		SDL_DrawText(672, 225, 25, config.dark_theme? TEXT_MIN_COLOUR_DARK : TEXT_MIN_COLOUR_LIGHT, "刷新");
+		SDL_DrawText(672, 327, 25, config.dark_theme? TEXT_MIN_COLOUR_DARK : TEXT_MIN_COLOUR_LIGHT, cut_status? "粘贴" : "移动");
+		SDL_DrawText(672, 429, 25, config.dark_theme? TEXT_MIN_COLOUR_DARK : TEXT_MIN_COLOUR_LIGHT, "其他...");
 	}
 	else {
-		SDL_DrawText(385, 225, 25, config.dark_theme? TEXT_MIN_COLOUR_DARK : TEXT_MIN_COLOUR_LIGHT, "New folder");
-		SDL_DrawText(385, 327, 25, config.dark_theme? TEXT_MIN_COLOUR_DARK : TEXT_MIN_COLOUR_LIGHT, "Rename");
+		SDL_DrawText(385, 225, 25, config.dark_theme? TEXT_MIN_COLOUR_DARK : TEXT_MIN_COLOUR_LIGHT, "新建文件夹");
+		SDL_DrawText(385, 327, 25, config.dark_theme? TEXT_MIN_COLOUR_DARK : TEXT_MIN_COLOUR_LIGHT, "重命名");
 		
-		SDL_DrawText(672, 225, 25, config.dark_theme? TEXT_MIN_COLOUR_DARK : TEXT_MIN_COLOUR_LIGHT, "New file");
+		SDL_DrawText(672, 225, 25, config.dark_theme? TEXT_MIN_COLOUR_DARK : TEXT_MIN_COLOUR_LIGHT, "新建文件");
 		if (config.dev_options)
-			SDL_DrawText(672, 327, 25, config.dark_theme? TEXT_MIN_COLOUR_DARK : TEXT_MIN_COLOUR_LIGHT, "Set archive bit");
+			SDL_DrawText(672, 327, 25, config.dark_theme? TEXT_MIN_COLOUR_DARK : TEXT_MIN_COLOUR_LIGHT, "设置存档位");
 	}
 
-	SDL_DrawText(900 - options_cancel_width, 605 - options_cancel_height, 25, config.dark_theme? TITLE_COLOUR_DARK : TITLE_COLOUR, "CANCEL");
+	SDL_DrawText(900 - options_cancel_width, 605 - options_cancel_height, 25, config.dark_theme? TITLE_COLOUR_DARK : TITLE_COLOUR, "取消");
 }

@@ -171,13 +171,13 @@ void Menu_PlayMusic(char *path) {
 
 		if (metadata.has_meta) {
 			if (metadata.album[0] != '\0')
-				SDL_DrawTextf(590, 156, 30, WHITE, "Album: %.50s", metadata.album);
+				SDL_DrawTextf(590, 156, 30, WHITE, "专辑: %.50s", metadata.album);
 
 			if (metadata.year[0] != '\0')
-				SDL_DrawTextf(590, 196, 30, WHITE, "Year: %.50s", metadata.year);
+				SDL_DrawTextf(590, 196, 30, WHITE, "年代: %.50s", metadata.year);
 			
 			if (metadata.genre[0] != '\0')
-				SDL_DrawTextf(590, 236, 30, WHITE, "Genre: %.50s", metadata.genre);
+				SDL_DrawTextf(590, 236, 30, WHITE, "类型: %.50s", metadata.genre);
 		}
 
 		if ((metadata.has_meta) && (metadata.cover_image))
